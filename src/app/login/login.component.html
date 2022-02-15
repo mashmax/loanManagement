@@ -1,0 +1,82 @@
+<div id="background" >
+<br>
+<br>
+  <div class="row">
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+         
+        <div class="shadow-lg p-3 mb-5 bg-body rounded" style="width: 30rem;height: 24rem;margin-left: 18%;margin-top: 5%;">
+           
+            <div style="text-align: center;font-size: xx-large; background-color:darkslateblue;width: 107.3%;
+            margin-left: -3.58%;margin-top: -4%;height: 15%;">
+                <b style="color: white;">Login</b>
+            </div>
+
+            <div style="height: 48px;">
+              <div class="alert alert-danger" role="alert" id="invalidUser" style="height: 40px;text-align: center;display: none; ">
+                Invalid Username or Password!
+              </div>
+            </div>
+
+            <div>
+            <form #loginForm="ngForm">
+
+                <div class="input-group mb-3">
+
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" style="height:100%"> <i class="fa fa-user" aria-hidden="true" style="color:darkslateblue;"></i></span>
+                    </div>
+
+                    <input ngModel name="email" id="email" type="text" class="form-control" placeholder="Enter Email" aria-label="Username" aria-describedby="basic-addon1" #email="ngModel" required>
+                  </div>
+                  <div style="height: 32px;margin-top: -4%;">
+                    <div *ngIf="email.invalid && (email.touched || email.dirty)">
+                        <p *ngIf="email.errors?.['required']" style="color: red;">Email required</p>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" style="height:100%"> <i class="fas fa-key" style="color: darkslateblue;"></i></span>
+                    </div>
+                    <input ngModel name="password" type="password" id="password" class="form-control" placeholder="Password*" aria-label="Password" aria-describedby="basic-addon1" #password="ngModel" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$">
+                    <div class="input-group-append">
+                        <span class="input-group-text" style="height: 100%;"><i class="fa fa-eye" style="color:darkslateblue;" aria-hidden="true" id="openeye0"  (click)="showeye(0)"></i>
+                            <i class="fas fa-eye-slash" id="closeeye0" style="display: none;color: darkslateblue;"></i></span>
+                    
+                        </div>
+                        <div id="pgla" style="margin-left: 3%;margin-top: 2%;">
+                          <i class="fas fa-info-circle fa-lg" style="color: darkslateblue;cursor: pointer;" data-toggle="tooltip" data-placement="top" title="Password must be of 8-15 in length and must contain 
+atleast one uppercase, one lower case,
+one number and a special character"></i>
+                        </div>
+                    </div>
+                    <div style="height: 32px;margin-top: -4%;">
+                        <div *ngIf="password.invalid && (password.touched || password.dirty)">
+                            <p *ngIf="password.errors?.['required']" style="color: red;">Password required</p>
+                        </div>  
+                    </div>
+
+                    <button  class="btn" id="loginButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;margin-left: 41%;" [disabled]="!loginForm.valid" (click)="login(loginForm)">Sign in</button>
+                    
+
+            </form>
+
+              <div style="text-align: center;">
+                
+                <p style="margin-top: 2%;"><a routerLink="/forgotpassword">Forgot Password</a></p>
+                 <p style="font-family: Verdana, Geneva, Tahoma, sans-serif;">New User/Admin  <a id="signupLink" routerLink="/signup">Sign up</a></p>
+              </div>
+
+            </div>
+            
+          </div>
+        
+    </div>
+   
+
+</div>
+
+</div>
+

@@ -1,0 +1,250 @@
+<div id="background">
+<br>
+<br>
+
+<div class="row">
+
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+        <div class="shadow-lg p-3 mb-5 bg-body rounded" style="width: 30rem;height: 36rem;margin-left: 18%;margin-top: 2%;">
+           
+            <div style="text-align: center;font-size: xx-large; background-color:darkslateblue;width: 107.3%;
+            margin-left: -3.58%;margin-top: -4%;height: 11%;">
+                <b style="color: white;">Register</b>
+            </div>
+
+            <br>
+            
+            <div>
+            <form #signupForm="ngForm" id="signupForm">
+
+                <div class="input-group mb-3">
+
+                     <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" style="height:100%"> <i class="fa fa-user" aria-hidden="true" style="color:darkslateblue;"></i></span>
+                    </div>
+
+                    <!-- <input ngModel name="adminuser" id="adminuser" type="text" class="form-control" placeholder="Enter admin/User" maxlength="4" minlength="4" aria-label="Username" aria-describedby="basic-addon1" #adminuser="ngModel" required>  -->
+
+                    <select class="form-select" id="adminuser" aria-label="Default select example">
+                      <option selected value="User">User</option>
+                      <option value="Admin">Admin</option>
+                    </select>
+
+                  </div>
+                  <div style="height: 32px;margin-top: -4%;">
+                    <!-- <div *ngIf="adminuser.invalid && (adminuser.touched || adminuser.dirty)">
+                        <p *ngIf="adminuser.errors?.['required']" style="color: red;">Required</p>
+                    </div> -->
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="height: 100%;"><i class="fa fa-envelope" aria-hidden="true" style="color: darkslateblue;"></i></span>
+                    </div>
+                    <input ngModel name="email" id="email" type="email" class="form-control" placeholder="Email *"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" (input)="checkEmail(email.value)" #email="ngModel" required/>
+                    <div class="input-group-append" *ngIf="email.valid && emailExist==false">
+                      <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-check" style="color: greenyellow;"></i></span>
+                    </div>
+                    <div class="input-group-append" *ngIf="email.valid && emailExist==true">
+                        <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-exclamation-triangle" style="color: red"></i></span>
+                      </div>
+                      <div class="input-group-append" *ngIf="email.errors?.['pattern']">
+                        <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-times" style="color: red;"></i></span>
+                    </div>
+                  </div>    
+                
+
+                  <div style="height: 32px;margin-top: -4%;">
+                    <div *ngIf="email.invalid && (email.touched || email.dirty)">
+                        <p *ngIf="email.errors?.['required']" style="color: red;">Email Required</p>
+                        <p *ngIf="email.errors?.['pattern']" style="color: red;">Incorrect Email Format</p>
+
+                    </div>
+                    <div *ngIf="email.valid && emailExist==true">
+                        <p style="color: red;">Email Already Used!</p>
+                    </div>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-user-circle" style="color: darkslateblue;"></i>
+                      </span>
+                    </div>
+                    <input ngModel name="username" id="username" type="text" 
+                    class="form-control" placeholder="Enter Username" pattern="^[a-zA-Z0-9]*$" maxlength="20" (input)="checkUsername(username.value)" #username="ngModel" required/>
+                    <div class="input-group-append" *ngIf="username.valid && usernameExist==false">
+                      <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-check" style="color: greenyellow;"></i></span>
+                    </div>
+                    <div class="input-group-append" *ngIf="username.valid && usernameExist==true">
+                        <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-exclamation-triangle" style="color: red"></i></span>
+                      </div>
+                      <div class="input-group-append" *ngIf="username.errors?.['pattern']">
+                        <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-times" style="color: red;"></i></span>
+                    </div>
+                  </div> 
+                  
+                  <div style="height: 32px;margin-top: -4%;">
+                    <div *ngIf="username.invalid && (username.touched || username.dirty)">
+                        <p *ngIf="username.errors?.['required']" style="color: red;">Username Required</p>
+                        <p *ngIf="username.errors?.['pattern']" style="color: red;">Only Alphanumeric allowed</p>
+                    </div>
+                    <div *ngIf="username.valid && usernameExist==true">
+                      <p style="color: red;">Username Already Taken!</p>
+                    </div>
+                  </div>
+
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" style="height: 100%;"><i class="fa fa-phone-alt" aria-hidden="true" style="color: darkslateblue;"></i></span>
+                    </div>
+                    <input ngModel name="mobileNumber" id="mobileNumber" type="text" maxlength="10" minlength="10" 
+                   class="form-control" placeholder="Enter Mobile Number"  pattern = "[0-9]{1,10}" (input)="checkNumber(mobileNumber.value)" #mobileNumber="ngModel" required/>
+                   <div class="input-group-append" *ngIf="mobileNumber.valid && numberExist==false">
+                    <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-check" style="color: greenyellow;"></i></span>
+                   </div>
+                    <div class="input-group-append" *ngIf="mobileNumber.valid && numberExist==true">
+                        <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-exclamation-triangle" style="color: red;"></i></span>
+                    </div>
+                    <div class="input-group-append" *ngIf="mobileNumber.errors?.['pattern']">
+                        <span class="input-group-text" style="height: 100%;background-color: white;"><i class="fas fa-times" style="color: red;"></i></span>
+                    </div>
+                </div>
+
+                <div style="height: 32px;margin-top: -4%;">
+                    <div *ngIf="mobileNumber.invalid && (mobileNumber.touched || mobileNumber.dirty)">
+                        <p *ngIf="mobileNumber.errors?.['required']" style="color: red;">Number Required</p>
+                        <p *ngIf="mobileNumber.errors?.['pattern']" style="color: red;">Enter Only Number</p>
+                    </div>
+
+                    <div *ngIf="mobileNumber.valid && numberExist==true">
+                      <p style="color: red;">Number Already Used!</p>
+                  </div>
+
+                  </div>
+
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" style="height:100%"> <i class="fas fa-key" style="color: darkslateblue;"></i></span>
+                    </div>
+                    <input ngModel name="password" type="password" id="password" class="form-control" placeholder="Password*" aria-label="Password" aria-describedby="basic-addon1" #password="ngModel" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$">
+                    <div class="input-group-append">
+                        <span class="input-group-text" style="height: 100%;"><i class="fa fa-eye" style="color:darkslateblue;" aria-hidden="true" id="openeye0"  (click)="showeye(0)"></i>
+                            <i class="fas fa-eye-slash" id="closeeye0" style="display: none;color: darkslateblue;"></i></span>
+                    
+                        </div>
+                        <div id="pgla" style="margin-left: 3%;margin-top: 2%;">
+                          <i class="fas fa-info-circle fa-lg" style="color: darkslateblue;cursor: pointer;" data-toggle="tooltip" data-placement="top" title="Password must be of 8-15 in length and must contain 
+atleast one uppercase, one lower case,
+one number and a special character"></i>
+                        </div>
+                    </div>
+                    <div style="height: 32px;margin-top: -4%;">
+                        <div *ngIf="password.invalid && (password.touched || password.dirty)">
+                            <p *ngIf="password.errors?.['required']" style="color: red;">Password required</p>
+                            <p *ngIf="password.errors?.['pattern']" style="color: red;">Pattern does not match</p>
+                        </div>  
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1" style="height:100%"> <i class="fas fa-key" style="color: darkslateblue;"></i></span>
+                        </div>
+                        <input  ngModel name="confirmPassword" type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password*" aria-label="Password" aria-describedby="basic-addon1" pattern="{{password.value}}" #confirmPassword="ngModel" required>
+                        <div class="input-group-append">
+                            <span class="input-group-text" style="height: 100%;"><i class="fa fa-eye" style="color: darkslateblue;" aria-hidden="true" id="openeye1"  (click)="showeye(1)"></i>
+                                <i class="fas fa-eye-slash" id="closeeye1" style="display: none;color: darkslateblue;"></i></span>
+                        </div>
+                                <div id="pgla" style="margin-left: 3%;margin-top: 2%;">
+                                   <i class="fas fa-info-circle fa-lg" style="color: darkslateblue;cursor: pointer;"data-toggle="tooltip" data-placement="top" title="Password must be of 8-15 in length and must contain
+atleast one uppercase, one lower case,
+one number and a special character"></i>
+                               </div>
+                        </div>
+
+                        <div style="height: 32px;margin-top: -4%;">
+                            <div *ngIf="confirmPassword.invalid && (confirmPassword.touched || confirmPassword.dirty)">
+                                <p *ngIf="confirmPassword.errors?.['required']" style="color: red;">Password required</p>
+                                <p *ngIf="confirmPassword.errors?.['pattern']" style="color: red;">Password must be same</p>
+                            </div>  
+                        </div>
+
+                        
+                   <div *ngIf="emailExist==false && numberExist==false && usernameExist==false">
+                    <button class="btn" id="submitButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;margin-left: 41%;" [disabled]="!signupForm.valid" (click)="onSubmit(signupForm)">Submit</button>
+                  </div>
+                  <div *ngIf="emailExist==true || numberExist==true || usernameExist==true">
+                    <button class="btn" id="submitButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;margin-left: 41%;" disabled>Submit</button>
+                  </div>
+            </form>
+
+              <div style="text-align: center;">
+                
+                 <p style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Already a User?  <a id="signinLink" routerLink="/">Login</a></p>
+              </div>
+
+            </div>
+            
+          </div>
+    </div>
+
+</div>
+
+
+
+
+</div>
+
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="trigg"(click)=showAlert() style="display: none;">
+  Launch demo modal
+</button>
+
+
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Email Verification</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="removeBoot()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success" role="alert" id="pleaseAlert">
+          We have send an OTP in your given mail.
+        </div>
+       <div class="row">
+         <div class="col-md-7">
+       <p>Please check your mail! and enter the given pin here.</p>
+        </div>
+        
+        <div class="col-md-5">
+          <div class="row">
+            <div class="col-md-1">
+              <p id="demo" style="color: red;font-size: 16px; margin-left: 62px;"></p>
+            </div>
+            <div class="col-md-3">
+              <input ngModel name="mehta" type="hidden" id="mehta" #mehta="ngModel">
+          <input ngModel name="otp" type="text" id="otp" maxlength="6" #otp="ngModel" style="margin-left: 150%;"
+           (input)="checkOtp(otp.value)">
+           </div>
+           <div class="col-md-1" style="margin-left: 52%;">
+            <p *ngIf="myvalue==true && otpcheck==true"><i class="fas fa-check" style="color: greenyellow;"></i></p>
+            <p *ngIf="myvalue==true && otpcheck==false"><i class="fas fa-times" style="color: red;"></i></p>
+           </div>
+        </div>
+        </div>
+        
+      </div>
+      </div>
+      <div class="modal-footer">
+  
+            <button type="button" class="btn btn-primary" id="resend" style="display: none;" (click)="resendOTP()">Resend</button>
+          
+            <button type="button" class="btn btn-primary" [disabled]="otpcheck==false" (click)="storeData()">Confirm</button>    
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<app-adminheader></app-adminheader>
+<div id="background">
+
+    <br>
+    
+
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-5">
+        
+            <div class="card" style="width: 36rem;">
+             <div class="card-body">
+                 <br>
+                  <!-- <h4 class="card-title">Card title</h4> -->
+                  <div *ngIf="requestLength==0" style="text-align: center;">
+                       <h4><b>No request yet!</b></h4>
+                  </div>
+                  <div *ngIf="requestLength>0">
+                   <div *ngFor="let value of requestArray" class="shadow-lg p-3 mb-5 bg-body rounded">
+                       <div class="row">
+                           <div class="col-md-2">
+                          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="width: 60px;height: 60px;">
+                           </div>
+                           <div class="col-md-10">
+                             <p><b>{{value.email}}</b> sent you a admin request.</p>
+                             <button class="btn btn-primary" style="border-radius: 12px; width: 40%;" (click)="addAdmin(value.adminId)">Confirm</button>
+                             <button class="btn btn-secondary" style="margin-left: 2%;border-radius: 12px; width: 40%;" (click)="deleteAdmin(value.adminId)">Delete</button>
+
+                             
+                           </div>
+                       </div>
+                    </div>
+                 </div> 
+              </div>
+            </div>
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

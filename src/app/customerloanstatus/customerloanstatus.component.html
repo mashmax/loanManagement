@@ -1,0 +1,764 @@
+<app-customerheader></app-customerheader>
+<br>
+<br>
+
+<div>
+    <div  style="text-align: center;">
+        <!-- <div class="col-md-4"></div>
+        <div class="col-md-8" style="text-align: center;"> -->
+           <h5><b style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: larger;">Track Your Loan Application</b></h5>
+        <!-- </div> -->
+         <!-- <a href="C:\Users\mashh\OneDrive\Documents\Mehta\Workspace\Loan\uploads">click here!</a> -->
+        <br>
+        <br>
+       <div class="row">
+           <div class="col-md-4"></div>
+           <div class="col-md-4">
+        <div class="input-group mb-3">
+            <!-- <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-calendar-plus fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div> -->
+            <input ngModel name="enterLoanId" id="enterLoanId" style="text-align: center;font-size: 20px;" type="text" maxlength="9" minlength="9"
+            class="form-control" placeholder="Enter your Loan Id" pattern = "[0-9]{1,9}" (input)="loanValue(enterLoanId.value)" #enterLoanId="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterLoanId.invalid && (enterLoanId.touched || enterLoanId.dirty)">
+                <p *ngIf="enterLoanId.errors?.['required']" style="color: red;text-align: left;">Loan Id Required</p>
+                <p *ngIf="enterLoanId.errors?.['pattern']" style="color: red;text-align: left;">Enter only Number</p>
+            </div>
+          </div>
+           
+          <button type="button" class="btn btn-danger" style="border-radius: 12px;width: 40%;" [disabled]="!enterLoanId.valid" (click)="trackLoan(enterLoanId.value)">Track</button>
+
+        </div>
+
+    </div>
+
+    </div>
+</div>
+
+<div>
+<div  id="noResult" style="text-align: center; display: none;">
+  <br>
+  <br>
+  <h5><b style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: larger;">Loan Not Found!</b></h5>
+</div>
+
+<!-- Search Loan  -->
+
+<div  id="yesResult" style="display: none;">
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+  <div *ngFor="let value of oneArray" class="alert alert-info" role="alert">
+    
+    <div class="row">
+      <div class="col-md-5" style="text-align: left;">
+         <b>Applicant Name : {{value.applicantName}}</b>
+         <br>
+         <b>Applicant Address : {{value.applicantAddress}}</b>
+         <br>
+         <b>Applicant Email : {{value.applicantEmail}}</b>
+      </div>
+      <div class="col-md-3" style="text-align: left;">
+        
+        <b>Applicant Phone : {{value.applicantMobile}}</b>
+        <br>
+        <b>Applicant Loan Id : {{value.loanId}}</b>
+        <br>
+        <b>Applicant Aadhaar : {{value.applicantAadhaar}}</b>
+
+
+      </div>
+      <div class="col-md-4" style="text-align: left;">
+        <div class="row">
+          <div class="col-md-10">
+        <b>Applicant PAN No : {{value.applicantPan}}</b>
+        <br>
+        <b>Applicant Salary : {{value.applicantSalary}}</b>
+          </div>
+          <div class="col-md-2">
+            <i *ngIf="value.status=='In Process'" class="fas fa-edit fa-lg" style="cursor: pointer; margin-left: 60%;"(click)="editLoan(value.loanId)"></i>
+            <i *ngIf="value.status!='Accepted'" style="color: red;cursor: pointer; margin-left: 60%;margin-top: 30%;" class="fas fa-trash-alt fa-lg" (click)="deleteLoan(value.loanId)"></i>
+          </div>
+        </div>
+
+        
+        <div class="row">
+          <div class="col-md-6">
+  
+            <button class="btn" id="viewDocumentsButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;" (click)="openFiles(value.loanId)">View Documents</button>
+            
+          </div>
+          <div class="col-md-6">
+            
+           
+
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    <div class="row">
+
+      <div class="col-md-5">
+
+
+      </div>
+
+      <div class="col-md-5">
+        
+        
+
+      </div>
+
+      <div class="col-md-2">
+
+        <br>
+
+        <div *ngIf="value.status=='In Process'" style="background-color: gold; text-align: center;font-size: large;" role="alert">
+          <b>In Process</b>
+        </div>
+
+        <div *ngIf="value.status=='Approved'" style="background-color: forestgreen; text-align: center;color: white;  font-size: large; " role="alert">
+          <b>Approved</b>
+        </div>
+
+        <div *ngIf="value.status=='Rejected'" style="background-color: red; text-align: center;color: white; font-size: large;" role="alert">
+          <b>Rejected</b>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+  </div>
+  </div>
+  <div class="col-md-1"></div>
+
+  </div>
+
+ </div>
+</div>
+
+
+<div>
+
+  
+
+  <br>
+  <br>
+
+
+<!-- All Loan  -->
+
+<div id="allLoan">
+
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+  <div *ngFor="let value of loanDetailsArray; let i=index" id="statusGrid{{i+1}}" class="alert alert-info" role="alert">
+    <div class="row">
+      <div class="col-md-5" style="text-align: left;">
+         <b>Applicant Name : {{value.applicantName}}</b>
+         <br>
+         <b>Applicant Address : {{value.applicantAddress}}</b>
+         <br>
+         <b>Applicant Email : {{value.applicantEmail}}</b>
+      </div>
+      <div class="col-md-3" style="text-align: left;">
+        
+        <b>Applicant Phone : {{value.applicantMobile}}</b>
+        <br>
+        <b>Applicant Loan Id : {{value.loanId}}</b>
+        <br>
+        <b>Applicant Aadhaar : {{value.applicantAadhaar}}</b>
+
+
+      </div>
+      <div class="col-md-4" style="text-align: left;">
+        <div class="row">
+          <div class="col-md-10">
+        <b>Applicant PAN No : {{value.applicantPan}}</b>
+        <br>
+        <b>Applicant Salary : {{value.applicantSalary}}</b>
+          </div>
+          <div class="col-md-2">
+            <i *ngIf="value.status=='In Process'" class="fas fa-edit fa-lg" style="cursor: pointer; margin-left: 60%;"(click)="editLoan(value.loanId)"></i>
+            <i *ngIf="value.status!='Accepted'" style="color: red;cursor: pointer; margin-left: 60%;margin-top: 30%;" class="fas fa-trash-alt fa-lg" (click)="deleteLoan(value.loanId)"></i>
+          </div>
+        </div>
+
+        
+        <div class="row">
+          <div class="col-md-6">
+        
+            <button class="btn" id="viewDocumentsButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;" (click)="openFiles(value.loanId)">View Documents</button>
+            
+          </div>
+          <div class="col-md-6">
+            
+           
+
+          </div>
+        </div>
+        
+      </div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    <div class="row">
+
+      <div class="col-md-5">
+
+      </div>
+
+      <div class="col-md-5">
+        
+
+      </div>
+
+      <div class="col-md-2">
+
+        
+
+        <div *ngIf="value.status=='In Process'" style="background-color: gold; text-align: center;font-size: large;" role="alert">
+          <b>In Process</b>
+        </div>
+
+        <div *ngIf="value.status=='Approved'" style="background-color: forestgreen; text-align: center;color: white;  font-size: large; " role="alert">
+          <b>Approved</b>
+        </div>
+
+        <div *ngIf="value.status=='Rejected'" style="background-color: red; text-align: center;color: white; font-size: large;" role="alert">
+          <b>Rejected</b>
+        </div>
+
+      </div>
+
+    </div>
+
+
+   
+    
+
+  </div>
+  </div>
+  <div class="col-md-1"></div>
+
+  </div>
+
+</div>
+
+
+
+</div>
+
+
+<!-- Edit Loan -->
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" id="launchModal" style="display: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="staticBackdropLabel">Edit Loan</h4>
+        <button type="button" class="btn-close" id="closeeditLoan" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+        <div *ngFor="let param of editArray">
+ 
+         <div class="row">
+
+          <div class="col-md-6">
+
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-user-circle fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input  name="enterName" id="enterName" type="text" 
+              class="form-control" placeholder="Enter Applicant Name" ngModel="{{param.applicantName}}" #enterName="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterName.invalid && (enterName.touched || enterName.dirty)">
+                  <p *ngIf="enterName.errors?.['required']" style="color: red;">Applicant Name Required</p>
+              </div>
+            </div>
+  
+  
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-map-marker-alt fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input  name="enterAddress" id="enterAddress" type="text" 
+              class="form-control" placeholder="Enter Applicant Address" ngModel="{{param.applicantAddress}}" #enterAddress="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterAddress.invalid && (enterAddress.touched || enterAddress.dirty)">
+                  <p *ngIf="enterAddress.errors?.['required']" style="color: red;">Applicant Address Required</p>
+              </div>
+            </div>
+   
+  
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fa fa-phone-alt fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input  name="enterMobile" id="enterMobile" type="text" minlength="10" maxlength="10"
+              class="form-control" ngModel="{{param.applicantMobile}}" placeholder="Enter Applicant Mobile" pattern = "[0-9]{1,10}" #enterMobile="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterMobile.invalid && (enterMobile.touched || enterMobile.dirty)">
+                  <p *ngIf="enterMobile.errors?.['required']" style="color: red;">Applicant Number Required</p>
+                  <p *ngIf="enterMobile.errors?.['pattern']" style="color: red;">Enter Only Number</p>
+              </div>
+            </div>
+  
+            <div class="input-group mb-3">
+  
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height:100%"> <i class="fa fa-envelope fa-lg" aria-hidden="true" style="color:darkslateblue;"></i></span>
+              </div>
+  
+              <input  name="enterEmail" id="enterEmail" ngModel="{{param.applicantEmail}}" type="email" class="form-control" placeholder="Enter Applicant Email Id" aria-label="Username" aria-describedby="basic-addon1" #enterEmail="ngModel" required>
+            </div>
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterEmail.invalid && (enterEmail.touched || enterEmail.dirty)">
+                  <p *ngIf="enterEmail.errors?.['required']" style="color: red;">Email required</p>
+                  <p *ngIf="enterEmail.errors?.['pattern']" style="color: red;">Incorrect Email Format</p>
+              </div>
+            </div>
+  
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fad fa-id-card fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input name="enterAadharNo" id="enterAadharNo" ngModel="{{param.applicantAadhaar}}" type="text" maxlength="12" minlength="12"
+              class="form-control" placeholder="Enter Applicant Aadhar No." pattern = "[0-9]{1,12}" #enterAadharNo="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterAadharNo.invalid && (enterAadharNo.touched || enterAadharNo.dirty)">
+                  <p *ngIf="enterAadharNo.errors?.['required']" style="color: red;">Aadhar No. Required</p>
+                  <p *ngIf="enterAadharNo.errors?.['pattern']" style="color: red;">Enter only Number</p>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col-md-6">
+
+ 
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-id-card fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input  name="enterPanNo" id="enterPanNo" type="text" ngModel="{{param.applicantPan}}"
+              class="form-control" placeholder="Enter Applicant PAN No." #enterPanNo="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterPanNo.invalid && (enterPanNo.touched || enterPanNo.dirty)">
+                  <p *ngIf="enterPanNo.errors?.['required']" style="color: red;">PAN No. Required</p>
+              </div>
+            </div>
+  
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-rupee-sign fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input  name="enterSalary" id="enterSalary" type="text" maxlength="12" minlength="5"
+              class="form-control" ngModel="{{param.applicantSalary}}" placeholder="Enter Applicant Salary" pattern = "[0-9]{1,12}" #enterSalary="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterSalary.invalid && (enterSalary.touched || enterSalary.dirty)">
+                  <p *ngIf="enterSalary.errors?.['required']" style="color: red;">Applicant Salary Required</p>
+                  <p *ngIf="enterSalary.errors?.['pattern']" style="color: red;">Enter only Number</p>
+              </div>
+            </div>
+  
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-coins fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input  name="enterAmount" id="enterAmount" type="text" maxlength="12" minlength="6" ngModel="{{param.loanAmountRequired}}"
+              class="form-control" placeholder="Enter Loan Amount Required" pattern = "[0-9]{1,12}" #enterAmount="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterAmount.invalid && (enterAmount.touched || enterAmount.dirty)">
+                  <p *ngIf="enterAmount.errors?.['required']" style="color: red;">Loan Amount Required</p>
+                  <p *ngIf="enterAmount.errors?.['pattern']" style="color: red;">Enter only Number</p>
+              </div>
+            </div>
+  
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-calendar-plus fa-lg" style="color: darkslateblue;"></i>
+                </span>
+              </div>
+              <input  name="enterMonths" id="enterMonths" type="text" maxlength="3" minlength="1" ngModel="{{param.loanRepaymentMonths}}"
+              class="form-control" placeholder="Enter Loan Repayment Months" pattern = "[0-9]{1,3}" #enterMonths="ngModel" required/>
+            </div> 
+            
+            <div style="height: 32px;margin-top: -4%;">
+              <div *ngIf="enterMonths.invalid && (enterMonths.touched || enterMonths.dirty)">
+                  <p *ngIf="enterMonths.errors?.['required']" style="color: red;">Months Required</p>
+                  <p *ngIf="enterMonths.errors?.['pattern']" style="color: red;">Enter only Number</p>
+              </div>
+            </div>
+
+            <input name="hiddenVar" type="hidden" id="hiddenVar" ngModel="{{param.loanId}}" #hiddenVar="ngModel">
+
+          </div>
+
+         </div>
+
+
+        </div>
+
+
+      </form>
+
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary" [disabled]="!editForm.valid" (click)="editLoanDetails(editForm)">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<button type="button" id="deleteLaunch" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<div class="icon-box">
+					<i class="material-icons">&#xE5CD;</i>
+				</div>						
+				<h4 class="modal-title w-100">Are you sure?</h4>	
+                <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true"></button> -->
+                <!-- <i class="fa fa-times fa-lg" id="closeClose" style="color: red;" data-bs-dismiss="modal" aria-hidden="true"></i> -->
+       <!-- <input ngModel class="catchIt" type="text" id="catchIt" style="display: none;" #catchIt="ngModel"> -->
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to delete this Loan Application? This process cannot be undone.</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-secondary" id="deletethisloanfast" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger" (click)="deleteLoanDetails()">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>   
+
+<!-- Edit Document -->
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" style="display: none;" id="editLaunchs" data-bs-toggle="modal" data-bs-target="#staticBackdrops">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrops" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabels" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="staticBackdropLabels">Edit Document</h4>
+        <button type="button" class="btn-close"
+        data-bs-target="#staticBackMash" data-bs-toggle="modal" data-bs-dismiss="modal" aria-label="Close" (click)="cancelModal()"></button>
+      </div>
+      <div class="modal-body">
+      
+        <div *ngFor="let value of oneDocumentArray">
+
+        <label for="selectDocumentType" class="form-label"><b>Upload Documents(Mandatory *)</b></label>
+        <select ngModel="{{value.documenttype}}" name="selectDocumentType" class="form-select" id="selectDocumentType" aria-label="Default select example" #selectDocumentType="ngModel" required>
+            <option selected value="jpg" >jpg</option>
+            <option value="pdf">pdf</option>
+          </select>
+
+       <br>
+       <br>
+       
+       
+      <div class="mb-3">
+        <label for="chooseFile" class="form-label"><b>Images or Documents(Upload below 2MB)</b></label>
+      <input ngModel name="chooseFile" class="form-control" type="file" id="chooseFile"  accept=".{{selectDocumentType.value}}" (change)="selectFile($event)" #chooseFile="ngModel" required>
+ 
+    </div>
+
+
+    
+       <!-- <br> -->
+
+       
+
+      </div>
+
+
+
+      <div style="height: 55px; margin-top: -2%;">
+
+        <div *ngIf="yesUpload==true" id="progressbar" class="progress my-3">
+          <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress.percentage }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress.percentage + '%' }"
+          >
+            {{ progress.percentage }}%
+          </div>
+        </div>
+    
+        <div class="alert alert-success" id="fileDone" style="text-align: center;display: none;" role="alert">
+          File Uploaded Successfully!
+        </div>
+    
+      </div>
+
+
+
+
+      <button class="btn" id="uploadButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem; margin-left: 32%; margin-top: 2%;" [disabled]="!selectedFiles" (click)="upload()">Upload Documents</button>
+      
+      <button type="button" style="display: none;" id="closeAddDocument" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" id="deleteLaunchDocument" style="display: none;" data-bs-toggle="modal" data-bs-target="#staticBack">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBack" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdrop">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div> -->
+      <div class="modal-body">
+        <div class="row">
+
+          <div class="col-md-3">
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkC357denHTfgFcSNmpZTSctRigESr-1ueG1vxerkjIXhFa_76ZN6iBI7p77_T-_Jj_GE&usqp=CAU" style="width: 108px;">
+
+          </div>
+
+          <div class="col-md-9">
+            <b style="font-size: larger;">Are you sure you want to delete this Document?</b>
+            <p>This item will be deleted immediately. You can't undo this action.</p>
+  
+          </div>
+
+        </div>
+       
+      </div>
+      <div class="modal-footer" style="border-top: 0px; margin-top: -5%;">
+        <button type="button" style="display: none;" class="btn-close" data-bs-dismiss="modal" id="closeDelete" aria-label="Close"></button>
+        <button type="button" class="btn btn-primary" 
+        data-bs-target="#staticBackMash" data-bs-toggle="modal" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger"(click)="deletethisDocument()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Document -->
+
+
+
+<button type="button" class="btn btn-primary" style="display: none;" id="addLaunchs" data-bs-toggle="modal" data-bs-target="#staticBackdropslab">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdropslab" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelss" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="staticBackdropLabelss">Add Document</h4>
+        <button type="button" class="btn-close" aria-label="Close"
+        data-bs-target="#staticBackMash" data-bs-toggle="modal" data-bs-dismiss="modal" (click)="cancelModals()"></button>
+      </div>
+      <div class="modal-body">
+      
+        <label for="selectDocumentTypes" class="form-label"><b>Upload Documents(Mandatory *)</b></label>
+        <select ngModel name="selectDocumentTypes" class="form-select" id="selectDocumentTypes" aria-label="Default select example" #selectDocumentTypes="ngModel" required>
+            <option selected value="jpg" >jpg</option>
+            <option value="pdf">pdf</option>
+          </select>
+
+       <br>
+       <br>
+       
+       
+      <div class="mb-3">
+        <label for="chooseFiles" class="form-label"><b>Images or Documents(Upload below 2MB)</b></label>
+      <input ngModel name="chooseFiles" class="form-control" type="file" id="chooseFiles"  accept=".{{selectDocumentTypes.value}}" (change)="selectFile($event)" #chooseFiles="ngModel" required>
+ 
+    </div>
+
+
+    
+    
+
+
+
+      <div style="height: 55px; margin-top: -2%;">
+
+        <div *ngIf="yesUpload==true" id="progressbar" class="progress my-3">
+          <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress.percentage }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress.percentage + '%' }"
+          >
+            {{ progress.percentage }}%
+          </div>
+        </div>
+    
+        <div class="alert alert-success" id="fileDones" style="text-align: center;display: none;" role="alert">
+          File Uploaded Successfully!
+        </div>
+    
+      </div>
+
+
+
+
+      <button class="btn" id="uploadButtons" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem; margin-left: 32%; margin-top: 2%;" [disabled]="!selectedFiles" (click)="uploads()">Upload Documents</button>
+
+      <button type="button" style="display: none;" id="closeAddDoc" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" style="display: none;" id="editDocs" data-bs-toggle="modal" data-bs-target="#staticBackMash">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackMash" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="staticBackMashLabel">Uploaded Documents</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="closeme" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div *ngFor="let value of editArray">
+        <div *ngFor="let id of value.documentIds"  class="alert alert-info" role="alert">
+          <div *ngFor="let param of documentArray">
+          <div class="row">
+            <div class="col-md-9">
+  
+              <a *ngIf="param.documentId==id" href="http://192.168.0.108:8080/{{param.documentupload}}" target="_blank" style="text-align: left;" download><b>{{param.documentupload}}</b></a>
+
+            </div>
+            <div class="col-md-3">
+
+              <button *ngIf="value.status=='In Process' && param.documentId==id" style="margin-left: 21%;" class="btn btn-primary" (click)="editDocument(param.documentId)"
+              data-bs-target="#staticBackdrops" data-bs-toggle="modal" data-bs-dismiss="modal">Edit</button>
+
+              <button *ngIf="value.status!='Accepted' && param.documentId==id" style="margin-left: 3%;" class="btn btn-danger" (click)="deleteDocument(param.documentId)"
+              data-bs-target="#staticBack" data-bs-toggle="modal" data-bs-dismiss="modal">Delete</button>
+
+            </div>
+
+            <!-- <div class="col-md-1">
+   
+
+
+            </div> -->
+
+
+          </div>
+        </div>
+        </div>
+      </div>
+        
+      </div>
+      <div class="modal-footer">
+        <b style="margin-right: 69%;">Total Documents : {{totalDocument}}</b>
+        <button type="button" class="btn btn-success" (click)="addnewDocument(myLoanId)"
+        data-bs-target="#staticBackdropslab" data-bs-toggle="modal" data-bs-dismiss="modal">Add <i class="fas fa-plus"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

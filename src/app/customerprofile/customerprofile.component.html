@@ -1,0 +1,297 @@
+<app-customerheader></app-customerheader>
+<br>
+<br>
+<!-- <div class="row">
+  <div class="col-md-10"></div>
+  <div class="col-md-2">
+    <label for="changeTheme" style="text-align: center;" class="form-label">Change Color</label>
+    <select class="form-select" id="changeTheme" style="width: 80%;" aria-label="Default select example" #changeTheme (change)="selectChange(changeTheme.value)">
+      <option value="light" selected>Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+</div> -->
+<div id="firstinfo" style="text-align: center;">
+
+    <b style="font-size: larger;font-family: Verdana, Geneva, Tahoma, sans-serif;">Profile Information <i *ngIf="prolength>0" class="fas fa-edit fa-lg" id="editbtn" style="color: darkslateblue;cursor: pointer;margin-left: 1%;" (click)="editform()"></i>
+      <i *ngIf="prolength>0" id="deletebtn" style="color: red; cursor: pointer; margin-left: 1%;" class="fas fa-trash-alt fa-lg" (click)="deletePro()"></i></b>
+    
+    <br>
+    <br>
+    <br>
+
+    <div *ngIf="prolength==0">
+
+    <div>
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+          <div class="alert alert-light"  role="alert" style="cursor: pointer; background-color: darkslateblue; border-radius: 12px;" (click)="openForm()">
+             <b style="color: white;"><i class="fa fa-user-plus"></i> Add Profile</b>
+          </div>
+        </div>
+        <div class="col-md-5"></div>
+      </div>
+    </div>
+
+    <div id="addprofileinfo" style="display: none;">
+    <form #profileForm="ngForm">
+    <div *ngFor="let value of profileArray">
+    <div class="row">
+        <div class="col-md-2" style="margin-left: 4.5%;"></div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input name="name" type="text" class="form-control" style="text-align: center;" ngModel="{{value.username}}" id="name" aria-describedby="emailHelp"   #name="ngModel" required>
+              </div>
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="name.invalid && (name.touched || name.dirty)">
+                    <p *ngIf="name.errors?.['required']" style="color: red; text-align: left;">Name required</p>
+                    <p *ngIf="name.errors?.['pattern']" style="color: red;">Pattern does not match</p>
+                </div>  
+            </div>
+              
+              <div class="mb-3">
+                <label for="mobileNo" class="form-label">Mobile Number</label>
+                <input name="mobileNo" type="text" class="form-control" style="text-align: center;" ngModel="{{value.number}}" id="mobileNo" aria-describedby="emailHelp" maxlength="10" minlength="10"  
+                pattern = "[0-9]{1,10}" (input)="checkNumber(mobileNo.value)"   #mobileNo="ngModel" required>
+              </div>
+              
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="mobileNo.invalid && (mobileNo.touched || mobileNo.dirty)">
+                    <p *ngIf="mobileNo.errors?.['required']" style="color: red;text-align: left; ">Number required</p>
+                    <p *ngIf="mobileNo.errors?.['pattern']" style="color: red;text-align: left;">Enter only number</p>
+                </div>  
+
+                <div *ngIf="mobileNo.valid && numberExist==true">
+                  <p style="color: red; text-align: left;">Number Already Used!</p>
+              </div>
+
+            </div>
+
+           
+              
+        </div>
+        <!-- <div class="col-md-1"></div> -->
+        <div class="col-md-3" style="margin-left: 7%;">
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input name="address" type="text" style="text-align: center;" class="form-control" ngModel id="address" aria-describedby="emailHelp"   #address="ngModel" required>
+              </div>
+
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="address.invalid && (address.touched || address.dirty)">
+                    <p *ngIf="address.errors?.['required']" style="color: red;text-align: left;">Address required</p>
+                    <!-- <p *ngIf="address.errors?.['pattern']" style="color: red;">Enter only number</p> -->
+                </div>  
+            </div>
+
+      
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input name="email" type="email" class="form-control" style="text-align: center;" ngModel="{{value.email}}" id="email" aria-describedby="emailHelp" (input)="checkEmail(email.value)" 
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  #email="ngModel" required>
+              </div>
+
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="email.invalid && (email.touched || email.dirty)">
+                    <p *ngIf="email.errors?.['required']" style="color: red;text-align: left;">Email required</p>
+                    <p *ngIf="email.errors?.['pattern']" style="color: red;text-align: left;">Incorrect Email</p>
+                </div> 
+                
+                <div *ngIf="email.valid && emailExist==true">
+                  <p style="color: red; text-align: left;">Email Already Used!</p>
+              </div>
+                
+            </div>
+
+              
+             
+
+        </div>
+
+    </div>
+
+     <br>
+
+     <div *ngIf="emailExist==false && numberExist==false">
+
+     <button class="btn" id="saveEdit" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;border-radius: 12px;width: 15%; margin-right: 1%;" [disabled]="!profileForm.valid" (click)="addProfile(profileForm)">Save</button>    
+
+    </div>
+
+
+    <div *ngIf="emailExist==true || numberExist==true">
+
+      <button class="btn" id="saveEdits" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;border-radius: 12px;width: 15%; margin-right: 1%;" disabled>Save</button>    
+
+    </div>
+
+    </div>
+
+  </form>
+
+ </div>
+
+</div>
+
+
+<div *ngIf="prolength>0">
+
+
+  <form #profilesForm="ngForm">
+    <div *ngFor="let value of proArray">
+    <div class="row">
+        <div class="col-md-2" style="margin-left: 4.5%;"></div>
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input name="name" type="text" class="form-control" style="text-align: center;" ngModel="{{value.name}}" id="name" aria-describedby="emailHelp" [disabled]="editoption==false"  #name="ngModel" required>
+              </div>
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="name.invalid && (name.touched || name.dirty)">
+                    <p *ngIf="name.errors?.['required']" style="color: red; text-align: left;">Name required</p>
+                    <p *ngIf="name.errors?.['pattern']" style="color: red;">Pattern does not match</p>
+                </div>  
+            </div>
+              
+              <div class="mb-3">
+                <label for="mobileNo" class="form-label">Mobile Number</label>
+                <input name="mobileNo" type="text" class="form-control" style="text-align: center;" ngModel="{{value.number}}" id="mobileNo" aria-describedby="emailHelp" maxlength="10" minlength="10"  
+                pattern = "[0-9]{1,10}" (input)="checkNumber(mobileNo.value)" [disabled]="editoption==false"   #mobileNo="ngModel" required>
+              </div>
+              
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="mobileNo.invalid && (mobileNo.touched || mobileNo.dirty)">
+                    <p *ngIf="mobileNo.errors?.['required']" style="color: red;text-align: left; ">Number required</p>
+                    <p *ngIf="mobileNo.errors?.['pattern']" style="color: red;text-align: left;">Enter only number</p>
+                </div>  
+
+                <div *ngIf="mobileNo.valid && numberExist==true">
+                  <p style="color: red; text-align: left;">Number Already Used!</p>
+              </div>
+
+            </div>
+
+           
+              
+        </div>
+        <!-- <div class="col-md-1"></div> -->
+        <div class="col-md-3" style="margin-left: 7%;">
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input name="address" type="text" style="text-align: center;" class="form-control" ngModel="{{value.address}}" id="address" aria-describedby="emailHelp" [disabled]="editoption==false"  #address="ngModel" required>
+              </div>
+
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="address.invalid && (address.touched || address.dirty)">
+                    <p *ngIf="address.errors?.['required']" style="color: red;text-align: left;">Address required</p>
+                    <!-- <p *ngIf="address.errors?.['pattern']" style="color: red;">Enter only number</p> -->
+                </div>  
+            </div>
+
+      
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input name="email" type="email" class="form-control" style="text-align: center;" ngModel="{{value.email}}" id="email" aria-describedby="emailHelp" (input)="checkEmail(email.value)" 
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [disabled]="editoption==false"  #email="ngModel" required>
+              </div>
+
+              <div style="height: 32px;margin-top: -4%;">
+                <div *ngIf="email.invalid && (email.touched || email.dirty)">
+                    <p *ngIf="email.errors?.['required']" style="color: red;text-align: left;">Email required</p>
+                    <p *ngIf="email.errors?.['pattern']" style="color: red;text-align: left;">Incorrect Email</p>
+                </div> 
+                
+                <div *ngIf="email.valid && emailExist==true">
+                  <p style="color: red; text-align: left;">Email Already Used!</p>
+              </div>
+                
+            </div>
+
+              
+             
+
+        </div>
+
+    </div>
+
+     <br>
+
+     <div *ngIf="editoption==true">
+
+     <div *ngIf="emailExist==false && numberExist==false">
+
+     <button class="btn" id="saveEdit" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;border-radius: 12px;width: 15%; margin-right: 1%;" [disabled]="!profilesForm.valid" (click)="updateProfile(profilesForm)">Save</button>    
+
+    </div>
+
+
+    <div *ngIf="emailExist==true || numberExist==true">
+
+      <button class="btn" id="saveEdits" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;border-radius: 12px;width: 15%; margin-right: 1%;" disabled>Save</button>    
+
+    </div>
+
+  </div>
+
+    </div>
+
+  </form>
+  
+
+</div>
+
+
+
+
+
+
+
+<!-- <div>
+
+  <div class="mb-3">
+    <label for="loanId" class="form-label">Loan Id</label>
+    <input type="text" class="form-control" id="loanId" aria-describedby="emailHelp" disabled>
+  </div>
+
+  <br>
+
+  <div class="mb-3">
+    <label for="monthlyemi" class="form-label">Monthly emi</label>
+    <input type="text" class="form-control" id="monthlyemi" aria-describedby="emailHelp" [disabled]="editoption==false">
+  </div>
+
+</div> -->
+
+</div>
+
+<button type="button" id="deleteLaunch" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" style="display: none;">
+  Launch demo modal
+</button>
+
+<!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<div class="icon-box">
+					<i class="material-icons">&#xE5CD;</i>
+				</div>						
+				<h4 class="modal-title w-100">Are you sure?</h4>	
+                <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true"></button> -->
+                <!-- <i class="fa fa-times fa-lg" id="closeClose" style="color: red;" data-bs-dismiss="modal" aria-hidden="true"></i> -->
+       <!-- <input ngModel class="catchIt" type="text" id="catchIt" style="display: none;" #catchIt="ngModel"> -->
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to delete this Profile? This process cannot be undone.</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-secondary" id="deletethisloanfast" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger" (click)="deleteprofile()">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>   

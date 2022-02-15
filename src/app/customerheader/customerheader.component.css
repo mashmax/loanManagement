@@ -1,0 +1,14 @@
+/* .bg-light {
+    --bs-bg-opacity: 1;
+    background-color: darkslateblue;
+} */
+
+#headlight {
+    --bs-bg-opacity: 1;
+    background-color: darkslateblue;
+    
+}
+
+.nav-link{
+    transform: scale(1.1);
+}

@@ -1,0 +1,255 @@
+<app-customerheader></app-customerheader>
+<br>
+<br>
+<br>
+<div>
+  <form #loanForm="ngForm">
+<div id="firstshow">
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-user-circle fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterName" id="enterName" type="text" 
+            class="form-control" placeholder="Enter Applicant Name" #enterName="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterName.invalid && (enterName.touched || enterName.dirty)">
+                <p *ngIf="enterName.errors?.['required']" style="color: red;">Applicant Name Required</p>
+            </div>
+          </div>
+
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-map-marker-alt fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterAddress" id="enterAddress" type="text" 
+            class="form-control" placeholder="Enter Applicant Address" #enterAddress="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterAddress.invalid && (enterAddress.touched || enterAddress.dirty)">
+                <p *ngIf="enterAddress.errors?.['required']" style="color: red;">Applicant Address Required</p>
+            </div>
+          </div>
+ 
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fa fa-phone-alt fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterMobile" id="enterMobile" type="text" minlength="10" maxlength="10"
+            class="form-control" placeholder="Enter Applicant Mobile" pattern = "[0-9]{1,10}" #enterMobile="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterMobile.invalid && (enterMobile.touched || enterMobile.dirty)">
+                <p *ngIf="enterMobile.errors?.['required']" style="color: red;">Applicant Number Required</p>
+                <p *ngIf="enterMobile.errors?.['pattern']" style="color: red;">Enter Only Number</p>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height:100%"> <i class="fa fa-envelope fa-lg" aria-hidden="true" style="color:darkslateblue;"></i></span>
+            </div>
+
+            <input ngModel name="enterEmail" id="enterEmail" type="email" class="form-control" placeholder="Enter Applicant Email Id" aria-label="Username" aria-describedby="basic-addon1" #enterEmail="ngModel" required>
+          </div>
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterEmail.invalid && (enterEmail.touched || enterEmail.dirty)">
+                <p *ngIf="enterEmail.errors?.['required']" style="color: red;">Email required</p>
+                <p *ngIf="enterEmail.errors?.['pattern']" style="color: red;">Incorrect Email Format</p>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fad fa-id-card fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterAadharNo" id="enterAadharNo" type="text" maxlength="12" minlength="12"
+            class="form-control" placeholder="Enter Applicant Aadhar No." pattern = "[0-9]{1,12}" #enterAadharNo="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterAadharNo.invalid && (enterAadharNo.touched || enterAadharNo.dirty)">
+                <p *ngIf="enterAadharNo.errors?.['required']" style="color: red;">Aadhar No. Required</p>
+                <p *ngIf="enterAadharNo.errors?.['pattern']" style="color: red;">Enter only Number</p>
+            </div>
+          </div>
+
+
+
+    </div>
+    <div class="col-md-1">
+        
+    </div>
+    <div class="col-md-4">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-id-card fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterPanNo" id="enterPanNo" type="text" 
+            class="form-control" placeholder="Enter Applicant PAN No." #enterPanNo="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterPanNo.invalid && (enterPanNo.touched || enterPanNo.dirty)">
+                <p *ngIf="enterPanNo.errors?.['required']" style="color: red;">PAN No. Required</p>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-rupee-sign fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterSalary" id="enterSalary" type="text" maxlength="12" minlength="5"
+            class="form-control" placeholder="Enter Applicant Salary" pattern = "[0-9]{1,12}" #enterSalary="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterSalary.invalid && (enterSalary.touched || enterSalary.dirty)">
+                <p *ngIf="enterSalary.errors?.['required']" style="color: red;">Applicant Salary Required</p>
+                <p *ngIf="enterSalary.errors?.['pattern']" style="color: red;">Enter only Number</p>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-coins fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterAmount" id="enterAmount" type="text" maxlength="12" minlength="6"
+            class="form-control" placeholder="Enter Loan Amount Required" pattern = "[0-9]{1,12}" #enterAmount="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterAmount.invalid && (enterAmount.touched || enterAmount.dirty)">
+                <p *ngIf="enterAmount.errors?.['required']" style="color: red;">Loan Amount Required</p>
+                <p *ngIf="enterAmount.errors?.['pattern']" style="color: red;">Enter only Number</p>
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="height: 100%;"><i class="fas fa-calendar-plus fa-lg" style="color: darkslateblue;"></i>
+              </span>
+            </div>
+            <input ngModel name="enterMonths" id="enterMonths" type="text" maxlength="3" minlength="1"
+            class="form-control" placeholder="Enter Loan Repayment Months" pattern = "[0-9]{1,3}" #enterMonths="ngModel" required/>
+          </div> 
+          
+          <div style="height: 32px;margin-top: -4%;">
+            <div *ngIf="enterMonths.invalid && (enterMonths.touched || enterMonths.dirty)">
+                <p *ngIf="enterMonths.errors?.['required']" style="color: red;">Months Required</p>
+                <p *ngIf="enterMonths.errors?.['pattern']" style="color: red;">Enter only Number</p>
+            </div>
+          </div>
+
+          
+
+    </div>
+</div>
+</div>
+
+<div id="secondshow" style="width: 1519.2px;height: 331.94px;display: none;">
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <label for="selectDocumentType" class="form-label"><b>Upload Documents(Mandatory *)</b></label>
+            <select ngModel name="selectDocumentType" class="form-select" id="selectDocumentType" aria-label="Default select example" #selectDocumentType="ngModel" required>
+                <option selected value="jpg" >jpg</option>
+                <option value="pdf">pdf</option>
+              </select>
+
+           <br>
+           <br>
+           
+           
+
+     
+
+          <div class="mb-3">
+            <label for="chooseFile" class="form-label"><b>Images or Documents(Upload below 2MB)</b></label>
+          <input class="form-control" type="file" id="chooseFile" accept=".{{selectDocumentType.value}}" multiple (change)="selectFiles($event)">
+     
+        </div>
+
+        <!-- <div *ngIf="currentFileUpload" id="progressbar" class="progress my-3">
+          <div
+            class="progress-bar progress-bar-info progress-bar-striped"
+            role="progressbar"
+            attr.aria-valuenow="{{ progress.percentage }}"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progress.percentage + '%' }"
+          >
+            {{ progress.percentage }}%
+          </div>
+        </div> -->
+        <div id="progressbar">
+        <div *ngFor="let progressInfo of progressInfos" class="mb-2">
+          <span>{{ progressInfo.fileName }}</span>
+          <div class="progress">
+            <div
+              class="progress-bar progress-bar-info"
+              role="progressbar"
+              attr.aria-valuenow="{{ progressInfo.value }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{ width: progressInfo.value + '%' }"
+            >
+              {{ progressInfo.value }}%
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+        <div *ngIf="message.length>0" id="information" class="alert alert-success" role="alert">
+          <ul *ngFor="let msg of message; let i = index">
+            <li>{{ msg }}</li>
+          </ul>
+        </div>
+
+
+        <div class="alert alert-success" id="fileDone" style="text-align: center;display: none;" role="alert">
+          File Uploaded Successfully!
+        </div>
+           <!-- <br> -->
+
+           <button class="btn" id="uploadDocumentsButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;margin-top: 2%;" [disabled]="!selectedFiles" (click)="uploadFiles()">Upload Documents</button>
+
+           
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          <div id="submitDocumentbtn" style="display: none;">
+            <button class="btn" id="uploadDocumentsButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;margin-top: 2%;border-radius: 12px;width: 80%;margin-top: 102%;" [disabled]="!loanForm.valid" (click)="submitLoan(loanForm)">Apply for Loan</button>
+          </div>
+          </div>
+    </div>
+</div>
+
+</form>
+
+</div>
+
+<div>
+    <button class="btn-circle" id="previous" style="margin-left: 41%;" (click)="prev()"><b style="color: white;">1</b></button>
+    <button class="btn-circle" id="next" (click)="next()" ><b style="color: white;">2</b></button>
+</div>

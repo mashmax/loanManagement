@@ -1,0 +1,9 @@
+#headlight {
+    --bs-bg-opacity: 1;
+    background-color:  royalblue;
+    
+}
+
+.nav-link{
+    transform: scale(1.1);
+}
