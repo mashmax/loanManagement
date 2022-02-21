@@ -50,11 +50,29 @@ export class AdminrequestComponent implements OnInit {
    addAdmin(param: any)
    {
       console.log("add id is "+param);
+
+      let addUsers = this.httpObj.get(this.url + "admin/addRequest/"+param);
+      addUsers.subscribe((response)=>{
+      console.log(response);
+      
+      this.ngOnInit();
+
+      }); 
+
+
       
    }
    deleteAdmin(param: any)
    {
        console.log("delete id is "+param);
+
+       let addUsers = this.httpObj.get(this.url + "admin/deleteRequest/"+param);
+       addUsers.subscribe((response)=>{
+       console.log(response);
+       
+       this.ngOnInit();
+       
+       }); 
        
    }
 

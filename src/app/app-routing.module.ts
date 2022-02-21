@@ -11,6 +11,7 @@ import { CustomerloanstatusComponent } from './customerloanstatus/customerloanst
 import { CustomerprofileComponent } from './customerprofile/customerprofile.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { LoginComponent } from './login/login.component';
+import { RepaymentscheduleComponent } from './repaymentschedule/repaymentschedule.component';
 import { RequestadminloginComponent } from './requestadminlogin/requestadminlogin.component';
 import { SignupComponent } from './signup/signup.component';
 import { TestcaseComponent } from './testcase/testcase.component';
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path: "adminheader", component: AdminheaderComponent},
   {path: "adminappliedloan", component: AdminappliedloanComponent},
   {path: "adminapprovedloan", component: AdminapprovedloanComponent},
-  {path: "adminrequest", component: AdminrequestComponent}
+  {path: "adminrequest", component: AdminrequestComponent},
+  {path: "repaymentschedule", component: RepaymentscheduleComponent}
 
 ];
 

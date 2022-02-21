@@ -30,6 +30,7 @@ export class CustomerloanstatusComponent implements OnInit {
   currentLoanId:any;
   totalDocument:any;
   myLoanId:any;
+  reasonArray:any;
 
   title = 'File-Upload-Save';
   selectedFiles: any;
@@ -38,6 +39,7 @@ export class CustomerloanstatusComponent implements OnInit {
   selectedFile = null;
   changeImage = false;
   yesUpload:boolean=false;
+  statuscheck:any;
 
   constructor(private router: Router, private httpObj: HttpClient, private route: ActivatedRoute, private local: LocalStorageService, private session: SessionStorageService) { }
 
@@ -59,6 +61,15 @@ export class CustomerloanstatusComponent implements OnInit {
      addUserss.subscribe((response)=>{
      console.log(response);
      this.documentArray=response;
+
+
+     let addUser = this.httpObj.get(this.url + "getAllReason");
+     addUser.subscribe((response)=>{
+     console.log(response);
+     this.reasonArray=response;
+  
+     }); 
+
   
      }); 
 
@@ -273,6 +284,15 @@ pushFileToStorages(file: File): Observable<HttpEvent<{}>> {
      this.totalDocument=this.editArray[0].documentIds.length;
 
      this.myLoanId=this.editArray[0].loanId;
+     this.statuscheck=this.editArray[0].status;
+     if(this.statuscheck=='In Process')
+     {
+      $('#adddocumentpls').removeAttr('disabled');  
+     }
+     else
+     {
+      $('#adddocumentpls').attr("disabled",'disabled');
+     }
 
      console.log("total document is "+this.totalDocument);
      console.log("loanId is "+this.myLoanId);
@@ -498,6 +518,19 @@ pushFileToStorages(file: File): Observable<HttpEvent<{}>> {
     $('#downArrow').show();
 
     
+   }
+   saveInLocal(key: any, val: any): void {
+    console.log('recieved= key:' + key + 'value:' + val);
+    this.local.set(key, val);
+    this.data[key]= this.local.get(key);
+   }
+
+   viewSchedule(param: any)
+   {
+     console.log("id is "+param);
+     this.saveInLocal(3,param);
+     this.router.navigate(["repaymentschedule"]);
+     
    }
 
 

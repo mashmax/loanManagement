@@ -75,6 +75,18 @@ export class AdminheaderComponent implements OnInit {
       $('#applyLoan').removeClass('active');
     }
 
+    else if(currentvalue=='repaymentschedule')
+    {
+      $('#loanStatus').addClass('active');
+
+      $('#loanStatus').css("transform","scale(1.3)");
+      $('#applyLoan').css("transform","scale(1.0)");
+      $('#profile').css("transform","scale(1.0)");
+
+      $('#applyLoan').removeClass('active');
+      $('#profile').removeClass('active');
+    }
+
 
 
 

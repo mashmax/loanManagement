@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService, SessionStorageService } from 'angular-web-storage';
 
@@ -21,9 +22,19 @@ export class AdminappliedloanComponent implements OnInit {
   deleteId:any;
   totalDocument:any;
   myLoanId:any;
+  check:boolean=false;
+  rejectId:any;
+  reasonArray:any;
+  giveAmount:any;
+  acceptId:any
+
+  contactForm = new FormGroup({});
+
+  name = new FormControl('', Validators.required);  
+ 
 
 
-  constructor(private router: Router, private httpObj: HttpClient, private route: ActivatedRoute, private local: LocalStorageService, private session: SessionStorageService) { }
+  constructor(private router: Router, private httpObj: HttpClient, private route: ActivatedRoute, private local: LocalStorageService, private session: SessionStorageService,private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
 
@@ -51,9 +62,6 @@ export class AdminappliedloanComponent implements OnInit {
     }); 
 
 
-    // $('#noResult').hide();
-    // $('#yesResult').hide();
-    // $('#allLoan').fadeIn();
   
      
     }); 
@@ -89,12 +97,62 @@ export class AdminappliedloanComponent implements OnInit {
      
    }
 
+   emptyThis()
+   {
+     $('#name').val('');
+     $('#Rejectbtn').attr("disabled",'disabled'); 
+   }
+
+   RejectReason(param: any)
+   {
+     console.log("reason is "+param);
+     if($('#name').val()=='' || $('#name').val()==undefined)
+     {
+       console.log("not valid");
+       
+     }
+     else
+     {
+      $('#Rejectbtn').removeAttr("disabled");
+     }
+     
+   }
+
+   
+
+  
+
    getFromLocal(key: any): any {
     console.log('recieved= key:' + key);
     this.data[key]= this.local.get(key);
     console.log(this.data);
     return this.data[key];
    }
+
+   onSubmit() {
+    console.log(this.name.value);
+    var reasons=this.name.value;
+    
+    this.reasonArray={
+      "loanId":this.rejectId,
+      "reason": reasons,
+      "adminId": this.userId
+    }
+    console.log(this.reasonArray);
+
+    let addUserss = this.httpObj.post(this.url + "admin/addReason",this.reasonArray);
+    addUserss.subscribe((response)=>{
+    console.log(response);
+
+    this.ngOnInit();
+     
+    $('#deletethisloanfaster').click();
+ 
+    }); 
+    
+
+
+  }
 
    editLoanDetails(param: any)
    {
@@ -119,14 +177,10 @@ export class AdminappliedloanComponent implements OnInit {
     addUsers.subscribe((response)=>{
     console.log(response);
       this.ngOnInit();
-    // let addUserss = this.httpObj.get(this.url + "user/viewLoan/"+this.userId);
-    // addUserss.subscribe((response)=>{
-    // console.log(response);
-    // this.loanDetailsArray=response;
+    
     
     $('#closeeditLoan').click();
      
-    // }); 
 
 
   }); 
@@ -142,6 +196,39 @@ export class AdminappliedloanComponent implements OnInit {
      this.deleteId=param
      $('#deleteLaunch').click();
      
+   }
+
+   checkLoan(param: any, id:any)
+   {
+     var salary;
+     var months;
+     var amount;
+     for(var i=0;i<this.allLoanArray.length;i++)
+     {
+       if(this.allLoanArray[i].loanId==param)
+       {
+           salary=this.allLoanArray[i].applicantSalary;
+           amount=this.allLoanArray[i].loanAmountRequired;
+           months=this.allLoanArray[i].loanRepaymentMonths;
+       }
+     }
+
+     var rate=(0.08)/12;
+
+    var emi=(amount*rate*Math.pow((1+rate), months)/(Math.pow((1+rate), months)-1));
+    var actualamount=(emi*months).toFixed(2);
+
+     this.giveAmount=(0.50*salary)*months;
+
+
+
+     alert('Applicable for a maximum amount of Rs '+this.giveAmount+' and total recovery amount including interest is Rs '+actualamount)
+     
+    //  $('#showAvailable'+id).fadeIn();
+    //  setTimeout(() => {
+    //   $('#showAvailable'+id).fadeOut();
+    //  }, 1200);
+
    }
 
    deleteLoanDetails()
@@ -192,6 +279,42 @@ export class AdminappliedloanComponent implements OnInit {
 
      $('#editDocs').click();
      
+   }
+
+   rejectLoan(param: any)
+   {
+     console.log("reject id is "+param);
+     this.rejectId=param;
+     
+     $('#deleteLaunchs').click();
+   }
+
+   acceptLoan(param: any)
+   {
+     console.log("Accept id is "+param);
+
+     this.acceptId=param;
+
+     $('#acceptThisLoan').click();
+     
+   }
+
+   acceptThisLoans()
+   {
+      console.log("Accept loan Id is "+this.acceptId);
+
+      let addUsers = this.httpObj.get(this.url + "admin/generateSchedule/"+this.acceptId);
+      addUsers.subscribe((response)=>{
+      console.log(response);
+      
+ 
+       this.ngOnInit();
+ 
+      $('#cancelthisloan').click();
+ 
+     }); 
+
+      
    }
 
 

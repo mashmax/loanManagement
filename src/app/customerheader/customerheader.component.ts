@@ -109,6 +109,36 @@ export class CustomerheaderComponent implements OnInit {
     }
 
 
+    else if(currentvalue=='repaymentschedule')
+    {
+      $('#loanStatus').addClass('active');
+
+      $('#loanStatus').css("transform","scale(1.3)");
+      $('#applyLoan').css("transform","scale(1.0)");
+      $('#profile').css("transform","scale(1.0)");
+
+      $('#applyLoan').removeClass('active');
+      $('#profile').removeClass('active');
+    }
+
+    if(currentvalue=='appliedloan')
+    {
+      $('#applyLoan').addClass('active');
+
+      $('#applyLoan').css("transform","scale(1.3)");
+      $('#loanStatus').css("transform","scale(1.0)");
+      $('#profile').css("transform","scale(1.0)");
+
+      $('#loanStatus').removeClass('active');
+      $('#profile').removeClass('active');
+
+      // $('#headlight').css("background-color","black");
+
+    }
+
+    
+
+
 
 
     $('#applyLoan').click(function(){

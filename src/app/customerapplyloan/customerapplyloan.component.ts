@@ -156,7 +156,7 @@ export class CustomerapplyloanComponent implements OnInit {
 
             setTimeout(() => {
               $('#information').fadeOut();
-              
+              this.selectedFiles=undefined;
             }, 1200);
 
 

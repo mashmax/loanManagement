@@ -20,6 +20,7 @@ import { AdminheaderComponent } from './adminheader/adminheader.component';
 import { AdminappliedloanComponent } from './adminappliedloan/adminappliedloan.component';
 import { AdminapprovedloanComponent } from './adminapprovedloan/adminapprovedloan.component';
 import { AdminrequestComponent } from './adminrequest/adminrequest.component';
+import { RepaymentscheduleComponent } from './repaymentschedule/repaymentschedule.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AdminrequestComponent } from './adminrequest/adminrequest.component';
     AdminheaderComponent,
     AdminappliedloanComponent,
     AdminapprovedloanComponent,
-    AdminrequestComponent
+    AdminrequestComponent,
+    RepaymentscheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +48,7 @@ import { AdminrequestComponent } from './adminrequest/adminrequest.component';
     ReactiveFormsModule,
     HttpClientModule,
     AngularWebStorageModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

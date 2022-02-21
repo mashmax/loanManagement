@@ -93,3 +93,27 @@
     display: inline-block;
     margin: 100px auto;
   }
+
+  .modal-confirm .btn-success {
+    background: forestgreen;
+  }
+
+  .modal-confirm .btn-success:hover, .modal-confirm .btn-success:focus{
+    background: green;
+  }
+
+  .modal-confirm .icon-boxs {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    border-radius: 50%;
+    z-index: 9;
+    text-align: center;
+    border: 3px solid seagreen;
+  }
+  .modal-confirm .icon-boxs i {
+    color: seagreen;
+    font-size: 46px;
+    display: inline-block;
+    margin-top: 13px;
+  }

@@ -1,0 +1,200 @@
+   <app-customerheader *ngIf="role=='User'"></app-customerheader>
+
+    <app-adminheader  *ngIf="role=='Admin'"></app-adminheader>
+
+<br>
+<br>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+<div  class="shadow-lg p-3 mb-5 bg-body rounded">
+    <div class="row">
+        <div class="col-md-2">
+       <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="width: 90px;height: 90px;">
+        </div>
+        <div class="col-md-10">
+          <div *ngFor="let value of loanArray">
+           <div class="row">
+               <div class="col-md-5">
+
+                <b>Loan Id : {{value.loanId}}</b>
+                <br>
+                <b>Applicant Name : {{value.applicantName}}</b>
+                <br>
+                <b>Applicant Salary : Rs {{value.applicantSalary}}</b>
+
+               </div>
+
+               <div class="col-md-5">
+                   <b>Rate of Interest : 8% p.a.</b>
+                   <br>
+                   <b>Loan Amount : Rs {{value.loanAmountRequired}}</b>
+                   <br>
+                   <b>Recovery Amount : Rs {{recoveryAmount}}</b>
+                   
+              </div>
+
+              <div class="col-md-2">
+                  <b>Total Installment :  {{totalInstallment}}</b> 
+              </div>
+
+           </div>
+        </div>
+          
+        </div>
+    </div>
+ </div>
+</div>
+<div class="col-md-2"></div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-11"></div>
+    <div class="col-md-1">
+        <b *ngIf="role=='User'" style="color: blue; cursor: pointer;" id="printprint" (click)="printTable()">Print <i class="fad fa-print"></i></b>
+    </div>
+</div>
+
+
+
+<table id="myTable">
+    <thead>
+    <tr>
+        <th >Installment No.</th>
+        <th >EMI</th>
+        <th >Fine</th>
+        <th >Total</th>
+        <th >Amount Paid</th>
+        <th >Due Date</th>
+        <th >Paid Date</th>
+        <th></th>
+    </tr>
+   </thead>
+
+   <tbody>
+    <tr *ngFor="let value of repayArray">
+      <td>{{value.installmentNo}}</td>
+      <td>{{value.emi}}</td>
+      <td>{{value.fine}}</td>
+      <td>{{value.total}}</td>
+      <td>{{value.amountPaid}}</td>
+      <td>{{value.dueDate}}</td>
+      <td>{{value.paidDate}}</td>
+      <td *ngIf="role=='Admin'" style="text-align: center;"><i class="fas fa-edit fa-lg" style="cursor: pointer;" (click)="editSchedule(value.installmentNo)"></i> <i class="fas fa-trash-alt fa-lg" style="color: red;margin-left: 10%;cursor: pointer;"></i></td>
+      <td *ngIf="role=='User'"></td>
+    </tr>
+</tbody>
+</table>
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" id="editRepay" style="display: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="staticBackdropLabel">Edit Schedule</h4>
+          <button type="button" class="btn-close" id="closethis" (click)="closeThis()" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form #editForm="ngForm">
+        <div *ngFor="let value of rowArray">
+           
+            
+
+                <!-- <div *ngFor="let payment of paidDateArray"> -->
+            
+            <div class="row">
+                <div class="col-md-4">
+
+                    <div class="mb-3">
+                        <label for="installNo" class="form-label">InstallmentNo</label>
+                        <input name="installNo" type="text" class="form-control" style="text-align: center;" ngModel="{{value.installmentNo}}" id="installNo" aria-describedby="emailHelp"   #installNo="ngModel" disabled>
+                      </div>
+
+
+                      <div class="mb-3">
+                        <label for="emi" class="form-label">EMI</label>
+                        <input name="emi" type="text" class="form-control" style="text-align: center;" ngModel="{{value.emi}}" id="emi" aria-describedby="emailHelp"   #emi="ngModel" disabled>
+                      </div>
+
+                     
+
+                      <div class="mb-3">
+                        <label for="fine" class="form-label">Fine</label>
+                        <input name="fine" type="text" class="form-control" style="text-align: center;" ngModel="{{value.fine}}" id="fine" aria-describedby="emailHelp"   #fine="ngModel" disabled>
+                      </div>
+
+                    
+
+                      
+
+                </div>
+                <div class="col-md-4">
+
+                    <div class="mb-3">
+                        <label for="dueDate" class="form-label">Due Date</label>
+                        <input name="dueDate" type="date" class="form-control" style="text-align: center;" ngModel="{{value.dueDate}}" id="dueDate" aria-describedby="emailHelp" (change)="showDate(dueDate.value)"  #dueDate="ngModel" disabled>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="total" class="form-label">Total</label>
+                        <input name="total" type="text" class="form-control" style="text-align: center;" ngModel="{{value.total}}" id="total" aria-describedby="emailHelp"   #total="ngModel" disabled>
+                      </div>
+
+                </div>
+                <div class="col-md-4">
+                  
+                    <div class="mb-3">
+                        <label for="paidDate" class="form-label">Paid Date</label>
+                        <input name="paidDate" type="date" class="form-control" style="text-align: center;" ngModel="{{value.paidDate}}" id="paidDate" aria-describedby="emailHelp" (change)="showDate(paidDate.value)"  #paidDate="ngModel" required>
+                      </div>
+
+                      <div style="height: 24px;margin-top: -7%;">
+                        <div *ngIf="paidDate.invalid && (paidDate.touched || paidDate.dirty)">
+                            <p *ngIf="paidDate.errors?.['required']" style="color: red; text-align: left;">Required</p>
+                            <p *ngIf="paidDate.errors?.['pattern']" style="color: red;">Pattern does not match</p>
+                        </div>  
+                    </div>
+
+                      <div class="mb-3">
+                        <label for="amountPaid" class="form-label">Amount Paid</label>
+                        <input name="amountPaid" type="text" class="form-control" style="text-align: center;" ngModel="{{value.amountPaid}}" id="amountPaid" aria-describedby="emailHelp"   #amountPaid="ngModel" required>
+                      </div>
+
+                      <div style="height: 24px;margin-top: -7%;">
+                        <div *ngIf="amountPaid.invalid && (amountPaid.touched || amountPaid.dirty)">
+                            <p *ngIf="amountPaid.errors?.['required']" style="color: red; text-align: left;">Required</p>
+                            <p *ngIf="amountPaid.errors?.['pattern']" style="color: red;">Pattern does not match</p>
+                        </div>  
+                    </div>
+                    
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-success" style="border-radius: 12px;
+            margin-left: 60%;width: 40%;" [disabled]="!editForm.valid">Save</button>
+
+            <!-- </div> -->
+        
+        
+
+        </div>
+
+      </form>
+
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div> -->
+      </div>
+    </div>
+  </div>

@@ -22,7 +22,7 @@
    
 
     height: 697px;
-    width: 1519px;
+    width: initial;
 
     background: linear-gradient(90deg, #C7C5F4, #776BCC);	
 }

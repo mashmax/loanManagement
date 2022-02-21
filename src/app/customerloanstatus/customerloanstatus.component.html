@@ -83,7 +83,7 @@
           </div>
           <div class="col-md-2">
             <i *ngIf="value.status=='In Process'" class="fas fa-edit fa-lg" style="cursor: pointer; margin-left: 60%;"(click)="editLoan(value.loanId)"></i>
-            <i *ngIf="value.status!='Accepted'" style="color: red;cursor: pointer; margin-left: 60%;margin-top: 30%;" class="fas fa-trash-alt fa-lg" (click)="deleteLoan(value.loanId)"></i>
+            <i *ngIf="value.status!='Approved'" style="color: red;cursor: pointer; margin-left: 60%;margin-top: 30%;" class="fas fa-trash-alt fa-lg" (click)="deleteLoan(value.loanId)"></i>
           </div>
         </div>
 
@@ -96,7 +96,9 @@
           </div>
           <div class="col-md-6">
             
-           
+            <div style="text-align: center; margin-top: 5%;">
+              <b *ngIf="value.status=='Approved'" style="cursor: pointer;" (click)="viewSchedule(value.loanId)"><u>View Schedule</u></b>
+            </div>
 
           </div>
         </div>
@@ -113,12 +115,19 @@
 
     <div class="row">
 
-      <div class="col-md-5">
+      <div class="col-md-8">
 
+        <div *ngFor="let parameter of reasonArray">
+
+          <div *ngIf="value.loanId==parameter.loanId">
+           <b style="color: red;">*Reason : {{parameter.reason}}</b>
+          </div>
+
+        </div>
 
       </div>
 
-      <div class="col-md-5">
+      <div class="col-md-2">
         
         
 
@@ -156,6 +165,9 @@
   </div>
 
  </div>
+
+
+
 </div>
 
 
@@ -202,7 +214,7 @@
           </div>
           <div class="col-md-2">
             <i *ngIf="value.status=='In Process'" class="fas fa-edit fa-lg" style="cursor: pointer; margin-left: 60%;"(click)="editLoan(value.loanId)"></i>
-            <i *ngIf="value.status!='Accepted'" style="color: red;cursor: pointer; margin-left: 60%;margin-top: 30%;" class="fas fa-trash-alt fa-lg" (click)="deleteLoan(value.loanId)"></i>
+            <i *ngIf="value.status!='Approved'" style="color: red;cursor: pointer; margin-left: 60%;margin-top: 30%;" class="fas fa-trash-alt fa-lg" (click)="deleteLoan(value.loanId)"></i>
           </div>
         </div>
 
@@ -215,7 +227,9 @@
           </div>
           <div class="col-md-6">
             
-           
+            <div style="text-align: center; margin-top: 5%;">
+              <b *ngIf="value.status=='Approved'" style="cursor: pointer;" (click)="viewSchedule(value.loanId)"><u>View Schedule</u></b>
+            </div>
 
           </div>
         </div>
@@ -232,11 +246,19 @@
 
     <div class="row">
 
-      <div class="col-md-5">
+      <div class="col-md-8">
+
+        <div *ngFor="let parameter of reasonArray">
+
+          <div *ngIf="value.loanId==parameter.loanId">
+           <b style="color: red;">*Reason : {{parameter.reason}}</b>
+          </div>
+
+        </div>
 
       </div>
 
-      <div class="col-md-5">
+      <div class="col-md-2">
         
 
       </div>
@@ -695,7 +717,7 @@
 
       <button class="btn" id="uploadButtons" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem; margin-left: 32%; margin-top: 2%;" [disabled]="!selectedFiles" (click)="uploads()">Upload Documents</button>
 
-      <button type="button" style="display: none;" id="closeAddDoc" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" style="display: none;" id="closeAddDoc" (click)="cancelModals()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
       </div>
       <!-- <div class="modal-footer">
@@ -736,7 +758,7 @@
               <button *ngIf="value.status=='In Process' && param.documentId==id" style="margin-left: 21%;" class="btn btn-primary" (click)="editDocument(param.documentId)"
               data-bs-target="#staticBackdrops" data-bs-toggle="modal" data-bs-dismiss="modal">Edit</button>
 
-              <button *ngIf="value.status!='Accepted' && param.documentId==id" style="margin-left: 3%;" class="btn btn-danger" (click)="deleteDocument(param.documentId)"
+              <button *ngIf="value.status=='In Process' && param.documentId==id" style="margin-left: 3%;" class="btn btn-danger" (click)="deleteDocument(param.documentId)"
               data-bs-target="#staticBack" data-bs-toggle="modal" data-bs-dismiss="modal">Delete</button>
 
             </div>
@@ -756,7 +778,7 @@
       </div>
       <div class="modal-footer">
         <b style="margin-right: 69%;">Total Documents : {{totalDocument}}</b>
-        <button type="button" class="btn btn-success" (click)="addnewDocument(myLoanId)"
+        <button id="adddocumentpls" type="button" class="btn btn-success" (click)="addnewDocument(myLoanId)"
         data-bs-target="#staticBackdropslab" data-bs-toggle="modal" data-bs-dismiss="modal">Add <i class="fas fa-plus"></i></button>
       </div>
     </div>

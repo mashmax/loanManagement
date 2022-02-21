@@ -32,7 +32,8 @@
               <b>Applicant Loan Id : {{value.loanId}}</b>
               <br>
               <b>Applicant Aadhaar : {{value.applicantAadhaar}}</b>
-      
+               <br>
+              <b>Loan Amount : Rs {{value.loanAmountRequired}}</b>
       
             </div>
             <div class="col-md-4" style="text-align: left;">
@@ -40,7 +41,7 @@
                 <div class="col-md-10">
               <b>Applicant PAN No : {{value.applicantPan}}</b>
               <br>
-              <b>Applicant Salary : {{value.applicantSalary}}</b>
+              <b>Applicant Salary : Rs {{value.applicantSalary}}</b>
                 </div>
                 <div class="col-md-2">
                   <i *ngIf="value.status=='In Process'" class="fas fa-edit fa-lg" style="cursor: pointer; margin-left: 60%;"(click)="editLoan(value.loanId)"></i>
@@ -50,12 +51,13 @@
       
               
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
               
                   <button class="btn" id="viewDocumentsButton" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;" (click)="openFiles(value.loanId)">View Documents</button>
+                  <button class="btn" id="checkAvailable" style="background-color: darkslateblue;color: white;border-radius: 0.25rem;margin: 0.25rem 0.125rem;" (click)="checkLoan(value.loanId,i)">Check</button>
                   
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   
                  
       
@@ -71,18 +73,30 @@
           <div class="row">
       
             <div class="col-md-5">
+
+              <div id="showAvailable{{i}}" style="display: none;">
+                <div *ngIf="giveAmount<value.loanAmountRequired" >
+                  <b style="color: red;">Applicable for a maximum amount of Rs {{giveAmount}}</b>
+                </div>
+  
+                <div *ngIf="giveAmount>=value.loanAmountRequired">
+                    <b>Applicable for a maximum amount of Rs {{giveAmount}}</b>
+                </div>
+              </div> 
       
             </div>
       
             <div class="col-md-5">
+             
+           
+               
               
-      
             </div>
       
             <div class="col-md-2">
       
-              <button class="btn btn-success" style="margin-left: 12%;">Approve</button>
-              <button class="btn btn-danger" style="margin-left: 3%;">Reject</button>
+              <button class="btn btn-success" style="margin-left: 12%;" (click)="acceptLoan(value.loanId)">Approve</button>
+              <button class="btn btn-danger" style="margin-left: 3%;" (click)="rejectLoan(value.loanId)">Reject</button>
 
               
       
@@ -301,7 +315,7 @@
   </button>
   
   <!-- Modal HTML -->
-  <div id="myModal" class="modal fade">
+  <div id="myModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-confirm">
           <div class="modal-content">
               <div class="modal-header flex-column">
@@ -373,3 +387,72 @@
       </div>
     </div>
   </div>
+
+
+  <button type="button" id="deleteLaunchs" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myMainModal" style="display: none;">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal HTML -->
+  <div id="myMainModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-confirm">
+          <div class="modal-content">
+              <div class="modal-header flex-column">
+                  <div class="icon-box">
+                      <i class="material-icons">&#xE5CD;</i>
+                  </div>						
+                  <h4 class="modal-title w-100">Are you sure?</h4>	
+                 
+              </div>
+              <div class="modal-body">
+                  <p>Do you really want to reject this Loan Application? This process cannot be undone.</p>
+                 
+                  <div class="mb-3">
+                    <label for="name" class="form-label" style="margin-right: 87%;">*Reason</label>
+                    <textarea class="form-control" id="name" rows="2" [formControl]="name" (input)="RejectReason(name.value)"></textarea>
+                  </div>
+
+                  <div style="height: 20px;margin-top: -4%;">
+                    <div *ngIf="name.invalid && (name.touched || name.dirty)">
+                        <p *ngIf="name.errors?.['required']" style="color: red; text-align: left;">Reason Required</p>
+                    </div>
+                  </div>
+              
+                  
+              </div>
+              <div class="modal-footer justify-content-center">
+                  <button type="button" class="btn btn-secondary" id="deletethisloanfaster" data-bs-dismiss="modal" (click)="emptyThis()">Cancel</button>
+                  <button  type="button" class="btn btn-danger" id="Rejectbtn" [disabled]="!name.valid" (click)="onSubmit()">Reject</button>
+                  
+              </div>
+          </div>
+      </div>
+  </div> 
+  
+  <button type="button" id="acceptThisLoan" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myMashModal" style="display: none;">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal HTML -->
+  <div id="myMashModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-confirm">
+          <div class="modal-content">
+              <div class="modal-header flex-column">
+                  <div class="icon-boxs">
+                    <i class="fas fa-check fa-4x"></i>
+                  </div>						
+                  <h4 class="modal-title w-100">Are you sure?</h4>	
+                  <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true"></button> -->
+                  <!-- <i class="fa fa-times fa-lg" id="closeClose" style="color: red;" data-bs-dismiss="modal" aria-hidden="true"></i> -->
+         <!-- <input ngModel class="catchIt" type="text" id="catchIt" style="display: none;" #catchIt="ngModel"> -->
+              </div>
+              <div class="modal-body">
+                  <p>Do you really want to accept this Loan Application? This process cannot be undone.</p>
+              </div>
+              <div class="modal-footer justify-content-center">
+                  <button type="button" class="btn btn-secondary" id="cancelthisloan" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-success" id="yesAccept" (click)="acceptThisLoans()">Accept</button>
+              </div>
+          </div>
+      </div>
+  </div>   
